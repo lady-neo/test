@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>teste</title>
+    <style>
+        body { font-family: monospace; background: #111; color: #0f0; text-align: center; padding: 20px; }
+        textarea { width: 80%; height: 100px; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: #0f0; color: #000; border: none; cursor: pointer; }
+        #output { margin-top: 20px; font-size: 18px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <h1>teste</h1>
+    <textarea id="userText" placeholder="Digite o texto aqui..."></textarea><br>
+    <button onclick="startTalking()">Falar</button>
+
+    <div id="output"></div>
+
+    <script>
+        function startTalking() {
+            const text = document.getElementById('userText').value;
+            const output = document.getElementById('output');
+
+            output.textContent = '';
+            let index = 0;
+
+            function typeNext() {
+                if (index < text.length) {
+                    output.textContent += text[index];
+
+                    if (text[index] !== ' ') {
+                        const blip = new Audio('blip.wav');
+                        
+                        const randomPitch = 0.9 + Math.random() * 0.3;
+                        blip.playbackRate = randomPitch;
+
+                        if (Math.random() < 0.05) {
+                            blip.playbackRate *= 0.5 + Math.random();
+                        }
+
+                        blip.play();
+                    }
+
+                    index++;
+                    setTimeout(typeNext, 50);
+                }
+            }
+
+            typeNext();
+        }
+    </script>
+
+</body>
+</html>
